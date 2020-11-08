@@ -39,7 +39,29 @@ namespace myStore.Controllers
         public ActionResult Create(Product product)
         {
             productService.SaveProduct(product);
-            return RedirectToAction("Index");
+            return RedirectToAction("ProductTable");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int Id)
+        {
+            var product = productService.GetProducts(Id);
+            return PartialView(product);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            productService.UpdateProduct(product);
+            return RedirectToAction("ProductTable");
+        }
+
+     
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            productService.DeleteProduct(Id);
+            return RedirectToAction("ProductTable");
         }
 
 

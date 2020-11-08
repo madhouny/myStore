@@ -30,8 +30,8 @@
                     <td></td>
                     <td>@product.Price</td>
                     <td>
-                        <button>Edit Product</button>
-                        <button>Delete Product</button>
+                        <button class="editBtn" data-id="@product.ID">Edit Product</button>
+                        <button class="deleteBtn" data-id="@product.ID">Delete Product</button>
                     </td>
                 </tr>
 
@@ -58,6 +58,58 @@
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
+    });
+
+
+    $("#newBtn").click(function () {
+        
+        $.ajax({
+            url: '/Product/Create',
+        })
+            .done(function (response) {
+                $(".actionContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
+
+    $(".editBtn").click(function () {
+
+        $.ajax({
+            
+            url: '/Product/Edit',
+            data: {
+                Id: $(this).attr('data-id')
+            }
+        })
+            .done(function (response) {
+                $(".actionContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
+    $(".deleteBtn").click(function () {
+        var confirmDelete = confirm("Are you sure you want to delete this product");
+        if (confirmDelete) {
+            $.ajax({
+                type: 'POST',
+                 url: '/Product/Delete',
+                data: {
+                    Id: $(this).attr('data-id')
+                }
+            })
+                .done(function (response) {
+                    $("#tableContiner").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("fail");
+                });
+        }
+
     });
 
 </script>
