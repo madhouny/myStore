@@ -1,0 +1,23 @@
+﻿@model myStore.Models.Category
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Category</h2>
+
+<form method="post">
+
+    <label>Id</label>
+    <input type="hidden" name="ID" value="@Model.ID" />
+
+    <label>Name</label>
+    <input name="Name" value="@Model.Name" />
+    <br />
+    <label>Description</label>
+    <input name="Description" value="@Model.Description" />
+
+    <br />
+
+    <button type="submit">save</button>
+</form>
+
