@@ -7,7 +7,7 @@ using System.Web;
 
 namespace myStore.DAL
 {
-    public class StoreContext : DbContext
+    public class StoreContext : DbContext 
     {
         
         public DbSet<Category> Categories { get; set; }
