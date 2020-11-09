@@ -1,4 +1,6 @@
-﻿using System;
+﻿using myStore.myStoreServices;
+using myStore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,18 @@ namespace myStore.Controllers
 {
     public class HomeController : Controller
     {
+        //Injection de Service Categories , pour separer Controller et Database
+        CategoriesService categoryService = new CategoriesService();
+
         public ActionResult Index()
         {
-            return View();
+            //Creer une nouvelle instance de ViewModel
+            HomeViewModel model = new HomeViewModel();
+
+            // Ajouter la liste des categories dans le ViewModel
+            model.Categories = categoryService.GetCategories();
+
+            return View(model);
         }
 
         public ActionResult About()

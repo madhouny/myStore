@@ -130,6 +130,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="DAL\StoreContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,12 +139,17 @@
     <Compile Include="Migrations\202011080948012_initialized.designer.cs">
       <DependentUpon>202011080948012_initialized.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011091042338_ImageURLADDED.cs" />
+    <Compile Include="Migrations\202011091042338_ImageURLADDED.designer.cs">
+      <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="myStoreServices\ProductsService.cs" />
     <Compile Include="myStoreServices\CategoriesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -488,6 +494,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202011080948012_initialized.resx">
       <DependentUpon>202011080948012_initialized.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011091042338_ImageURLADDED.resx">
+      <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
