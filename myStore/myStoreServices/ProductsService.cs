@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace myStore.myStoreServices
 {
@@ -21,7 +22,7 @@ namespace myStore.myStoreServices
         {
             using (var context = new StoreContext())
             {
-                return context.Products.ToList();
+                return context.Products.Include(c=>c.category).ToList();
             }
         }
 
@@ -29,6 +30,9 @@ namespace myStore.myStoreServices
         {
             using(var context = new StoreContext())
             {
+                //Save Category in Database
+                context.Entry(product.category).State = System.Data.Entity.EntityState.Unchanged;
+
                 context.Products.Add(product);
                 context.SaveChanges();
             }

@@ -1,5 +1,6 @@
 ﻿using myStore.Models;
 using myStore.myStoreServices;
+using myStore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,27 @@ namespace myStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            //Recuperer les categories
+            CategoriesService categoryService = new CategoriesService();
+
+            var categories = categoryService.GetCategories();
+            return PartialView(categories);
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(CategoryViewModel model)
         {
-            productService.SaveProduct(product);
+            //Injection de service
+            CategoriesService categoryService = new CategoriesService();
+
+            var newProduct = new Product();
+            newProduct.Name = model.Name;
+            newProduct.Description = model.Description;
+            newProduct.Price = model.Price;
+            //newProduct.CategoryID = model.CategoryID;
+            newProduct.category = categoryService.GetCategories(model.CategoryID);
+
+            productService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<myStore.Models.Category> 
 @{
     ViewBag.Title = "Create";
 }
@@ -6,21 +6,37 @@
 <h2>Create Product</h2>
 
 <form id="createProduct">
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" name="CategoryID">
+            @foreach (var category in Model)
+            {
+                <option value="@category.ID">@category.Name</option>
+            }
+        </select>
+    </div>
 
-    <label>Name</label>
-    <input name="Name" />
-    <br />
+    <div class="form-group">
+        <label>Name</label>
+        <input name="Name" class="form-control" />
+    </div>
 
-    <label>Description</label>
-    <input name="Description" />
-    <br />
+    <div class="form-group">
+        <label>Description</label>
+        <input name="Description" class="form-control" />
+    </div>
 
-    <label>Price</label>
-    <input name="Price" />
+    <div class="form-group">
+        <label>Price</label>
+        <input name="Price" class="form-control" />
+    </div>
 
-    <button id="saveBtn" type="button">save</button>
+    <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
+   
 </form>
 
+
+<h2>Create Product</h2>
 
 <script>
     $("#saveBtn").click(function () {
