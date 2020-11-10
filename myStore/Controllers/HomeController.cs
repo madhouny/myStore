@@ -19,7 +19,7 @@ namespace myStore.Controllers
             HomeViewModel model = new HomeViewModel();
 
             // Ajouter la liste des categories dans le ViewModel
-            model.Categories = categoryService.GetCategories();
+            model.FeaturedCategories = categoryService.GetFeaturedCategories();
 
             return View(model);
         }

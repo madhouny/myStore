@@ -15,13 +15,18 @@
     <br />
 
     <label>Image</label>
-    <input id="ImageURL" name="ImageURL" type="hidden"/>
+    <input id="ImageURL" name="ImageURL" type="hidden" />
     <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-    
+
     <div class="thumb">
-       <img id="categoryImage" />
+        <img id="categoryImage" />
     </div>
     <br />
+
+    <label>Is Featured?</label>
+    <input name="isFeatured" type="radio" value="True"/> True
+    <input name="isFeatured" type="radio" value="False" /> False
+
     <button type="submit">save</button>
 </form>
 

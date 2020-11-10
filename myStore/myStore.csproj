@@ -143,6 +143,10 @@
     <Compile Include="Migrations\202011091042338_ImageURLADDED.designer.cs">
       <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011100952033_addedIsFeatured.cs" />
+    <Compile Include="Migrations\202011100952033_addedIsFeatured.designer.cs">
+      <DependentUpon>202011100952033_addedIsFeatured.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Product.cs" />
@@ -498,6 +502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011091042338_ImageURLADDED.resx">
       <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011100952033_addedIsFeatured.resx">
+      <DependentUpon>202011100952033_addedIsFeatured.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

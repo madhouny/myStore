@@ -25,6 +25,14 @@ namespace myStore.myStoreServices
             }
         }
 
+        public List<Category> GetFeaturedCategories()
+        {
+            using (var context = new StoreContext())
+            {
+                return context.Categories.Where(x=>x.isFeatured && x.ImageURL != null).ToList();
+            }
+        }
+
         public void SaveCategory(Category category)
         {
             using(var context = new StoreContext())
