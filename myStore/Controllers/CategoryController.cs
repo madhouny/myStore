@@ -1,5 +1,6 @@
 ﻿using myStore.Models;
 using myStore.myStoreServices;
+using myStore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,49 +18,83 @@ namespace myStore.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var categories = categoryService.GetCategories();
-            return View(categories);
+            //var categories = categoryService.GetCategories();
+            //return View(categories);
+            return View();
+        }
+        public ActionResult CategoryTable(string search)
+        {
+            CategorySearchViewModel model = new CategorySearchViewModel();
+
+            model.Categories = categoryService.GetCategories();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                model.SearchTerm = search;
+                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                //categories = categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            return PartialView("CategoryTable", model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            CategoryViewModel model = new CategoryViewModel();
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(Category category)
+        public ActionResult Create(CategoryViewModel model)
         {
-            categoryService.SaveCategory(category);
-            return RedirectToAction("Index");
+
+            var newCategory = new Category();
+            newCategory.Name = model.Name;
+            newCategory.Description = model.Description;
+            newCategory.ImageURL = model.ImageURL;
+            newCategory.isFeatured = model.isFeatured;
+
+            categoryService.SaveCategory(newCategory);
+
+            return RedirectToAction("CategoryTable");
         }
 
         [HttpGet]
         public ActionResult Edit(int Id)
         {
+            EditCategoryViewModel model = new EditCategoryViewModel();
             var category = categoryService.GetCategories(Id);
-            return View(category);
+
+            model.ID = category.ID;
+            model.Name = category.Name;
+            model.Description = category.Description;
+            model.ImageURL = category.ImageURL;
+            model.isFeatured = category.isFeatured;
+
+            return PartialView(model);
+
         }
 
         [HttpPost]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(EditCategoryViewModel model)
         {
-            categoryService.UpdateCategory(category);
-            return RedirectToAction("Index");
+            var existingCategory = categoryService.GetCategories(model.ID);
+            existingCategory.Name = model.Name;
+            existingCategory.Description = model.Description;
+            existingCategory.ImageURL = model.ImageURL;
+            existingCategory.isFeatured = model.isFeatured;
+
+            categoryService.UpdateCategory(existingCategory);
+            return RedirectToAction("CategoryTable");
         }
 
-        [HttpGet]
-        public ActionResult Delete(int Id)
-        {
-            var category = categoryService.GetCategories(Id);
-            return View(category);
-        }
-
+       
         [HttpPost]
-        public ActionResult Delete(Category category)
+        public ActionResult Delete(int  Id)
         {
-            categoryService.DeleteCategory(category.ID);
-            return RedirectToAction("Index");
+            categoryService.DeleteCategory(Id);
+            return RedirectToAction("CategoryTable");
         }
     }
 }

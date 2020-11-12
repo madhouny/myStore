@@ -7,13 +7,13 @@ namespace myStore.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addedIsFeatured : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addedIsFeatured));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202011100952033_addedIsFeatured"; }
+            get { return "202011111807104_initial"; }
         }
         
         string IMigrationMetadata.Source

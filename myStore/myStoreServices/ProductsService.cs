@@ -14,7 +14,8 @@ namespace myStore.myStoreServices
         {
             using (var context = new StoreContext())
             {
-                return context.Products.Find(Id);
+                //return context.Products.Find(Id);
+                return context.Products.Where(x => x.ID == Id).Include(x => x.category).FirstOrDefault();
             }
         }
 

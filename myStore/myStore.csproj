@@ -135,17 +135,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202011080948012_initialized.cs" />
-    <Compile Include="Migrations\202011080948012_initialized.designer.cs">
-      <DependentUpon>202011080948012_initialized.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011091042338_ImageURLADDED.cs" />
-    <Compile Include="Migrations\202011091042338_ImageURLADDED.designer.cs">
-      <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011100952033_addedIsFeatured.cs" />
-    <Compile Include="Migrations\202011100952033_addedIsFeatured.designer.cs">
-      <DependentUpon>202011100952033_addedIsFeatured.cs</DependentUpon>
+    <Compile Include="Migrations\202011111807104_initial.cs" />
+    <Compile Include="Migrations\202011111807104_initial.designer.cs">
+      <DependentUpon>202011111807104_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -155,10 +147,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\icon\favicon.png" />
+    <Content Include="Content\placeholder-image.png" />
     <Content Include="Content\images\avatar-1.png" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\bg-countdown-1-962x506.jpg" />
@@ -482,6 +476,7 @@
     <Content Include="Views\Product\ProductTable.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Category\CategoryTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -497,14 +492,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011080948012_initialized.resx">
-      <DependentUpon>202011080948012_initialized.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011091042338_ImageURLADDED.resx">
-      <DependentUpon>202011091042338_ImageURLADDED.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011100952033_addedIsFeatured.resx">
-      <DependentUpon>202011100952033_addedIsFeatured.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011111807104_initial.resx">
+      <DependentUpon>202011111807104_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
