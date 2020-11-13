@@ -39,12 +39,14 @@ namespace myStore.Controllers
             return PartialView("CategoryTable", model);
         }
 
+        #region Create
         [HttpGet]
         public ActionResult Create()
         {
             CategoryViewModel model = new CategoryViewModel();
             return PartialView(model);
         }
+
 
         [HttpPost]
         public ActionResult Create(CategoryViewModel model)
@@ -60,7 +62,9 @@ namespace myStore.Controllers
 
             return RedirectToAction("CategoryTable");
         }
+        #endregion
 
+        #region Update
         [HttpGet]
         public ActionResult Edit(int Id)
         {
@@ -89,8 +93,8 @@ namespace myStore.Controllers
             categoryService.UpdateCategory(existingCategory);
             return RedirectToAction("CategoryTable");
         }
+        #endregion
 
-       
         [HttpPost]
         public ActionResult Delete(int  Id)
         {

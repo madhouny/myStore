@@ -12,8 +12,9 @@ namespace myStore.ViewModels
     }
     public class ProductSearchViewModel
     {
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get;  set; }
         public string SearchTerm { get; set; }
+        public int PageNo { get;  set; }
 
     }
 

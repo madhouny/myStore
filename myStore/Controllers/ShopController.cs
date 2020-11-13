@@ -10,7 +10,7 @@ namespace myStore.Controllers
 {
     public class ShopController : Controller
     {
-        ProductsService productService = new ProductsService();
+        //ProductsService productService = new ProductsService();
         public ActionResult Checkout()
         {
             ChekoutViewModel model = new ChekoutViewModel();
@@ -25,7 +25,7 @@ namespace myStore.Controllers
 
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
 
-                model.CartProducts = productService.GetProducts(model.CartProductIDs);
+                model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
 
             }
             return View(model);

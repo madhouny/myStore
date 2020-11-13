@@ -12,8 +12,8 @@ namespace myStore.Controllers
     public class ProductController : Controller
     {
 
-        //Injection de Service Categories , pour separer Controller et Database
-        ProductsService productService = new ProductsService();
+        //Injection de Service Categories, Products , pour separer Controller et Database
+        //ProductsService productService = new ProductsService();
         CategoriesService categoryService = new CategoriesService();
 
         public ActionResult Index()
@@ -21,12 +21,15 @@ namespace myStore.Controllers
             return View();
         }
 
-        public ActionResult ProductTable(string search)
+        public ActionResult ProductTable(string search, int? pageNo)
         {
             //var products = productService.GetProducts();
+
             ProductSearchViewModel model = new ProductSearchViewModel();
 
-            model.Products = productService.GetProducts();
+            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+
+            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
             
             if(string.IsNullOrEmpty(search) == false)
             {
@@ -65,7 +68,7 @@ namespace myStore.Controllers
             //newProduct.CategoryID = model.CategoryID;
             newProduct.category = categoryService.GetCategories(model.CategoryID);
 
-            productService.SaveProduct(newProduct);
+            ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 
@@ -76,7 +79,7 @@ namespace myStore.Controllers
             //return PartialView(product);
 
             EditProductViewModel model = new EditProductViewModel();
-            var product = productService.GetProducts(Id);
+            var product = ProductsService.Instance.GetProduct(Id);
             model.ID = product.ID;
             model.Name = product.Name;
             model.Description = product.Description;
@@ -94,13 +97,13 @@ namespace myStore.Controllers
             //productService.UpdateProduct(product);
             //return RedirectToAction("ProductTable");
 
-            var existingProduct = productService.GetProducts(model.ID);
+            var existingProduct = ProductsService.Instance.GetProduct(model.ID);
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.category = categoryService.GetCategories(model.CategoryID);
 
-            productService.UpdateProduct(existingProduct);
+            ProductsService.Instance.UpdateProduct(existingProduct);
 
             return RedirectToAction("ProductTable");
         }
@@ -109,7 +112,7 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            productService.DeleteProduct(Id);
+            ProductsService.Instance.DeleteProduct(Id);
             return RedirectToAction("ProductTable");
         }
 
