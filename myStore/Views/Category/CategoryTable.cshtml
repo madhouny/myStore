@@ -46,6 +46,12 @@
                         <td>@category.Name</td>
                         <td>
                             @category.Products.Count
+                            <br />
+
+                            @foreach(var product in category.Products)
+                            {
+                                <span>@product.Name</span>
+                            }
                         </td>
                         <td class="wrap-td">
                             <button class="editBtn" data-id="@category.ID">Edit</button>
@@ -62,14 +68,12 @@
     </table>
 </div>
 
-
-
 <script>
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Category/CategoryTable',
+            url: '@Url.Action("CategoryTable", "Category")',//'/Category/CategoryTable',
             data: {
                 search: searchValue
             }

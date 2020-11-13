@@ -140,9 +140,15 @@
     <Compile Include="Migrations\202011111807104_initial.designer.cs">
       <DependentUpon>202011111807104_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011131113088_configurationTable.cs" />
+    <Compile Include="Migrations\202011131113088_configurationTable.designer.cs">
+      <DependentUpon>202011131113088_configurationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="myStoreServices\ConfigurationsService.cs" />
     <Compile Include="myStoreServices\ProductsService.cs" />
     <Compile Include="myStoreServices\CategoriesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -497,6 +503,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202011111807104_initial.resx">
       <DependentUpon>202011111807104_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011131113088_configurationTable.resx">
+      <DependentUpon>202011131113088_configurationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
