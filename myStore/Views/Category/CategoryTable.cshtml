@@ -15,10 +15,13 @@
                 <div class="form-group">
                     <label>Action</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <button class="btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4">
                             <button class=" btn btn-primary form-control" type="button" id="newBtn">New</button>
                         </div>
                     </div>
@@ -48,10 +51,10 @@
                             @category.Products.Count
                             <br />
 
-                            @foreach(var product in category.Products)
+                            @*@foreach(var product in category.Products)
                             {
                                 <span>@product.Name</span>
-                            }
+                            }*@
                         </td>
                         <td class="wrap-td">
                             <button class="editBtn" data-id="@category.ID">Edit</button>
@@ -86,15 +89,32 @@
             });
     });
 
+        $("#resetBtn").click(function () {
+        var searchValue = '';
+
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',//'/Category/CategoryTable',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContiner").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
 
     $("#newBtn").click(function () {
 
         $.ajax({
-            url: '/Category/Create',
+            url: '@Url.Action("Create", "Category")'//'/Category/Create',
         })
             .done(function (response) {
                 $(".actionContainer").html(response);
-                focusAction();
+                focusAction(".actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -106,15 +126,14 @@
 
         $.ajax({
 
-            url: '/Category/Edit',
+            url: '@Url.Action("Edit", "Category")', //'/Category/Edit',
             data: {
                 Id: $(this).attr('data-id')
             }
         })
             .done(function (response) {
                 $(".actionContainer").html(response);
-
-                focusAction();
+                focusAction(".actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -134,7 +153,7 @@
 
                     $.ajax({
                     type: 'POST',
-                         url: '/Category/Delete',
+                         url: '@Url.Action("Delete", "Category")',//'/Category/Delete',
                         data: {
                             Id: $(this).attr('data-id')
                         }
@@ -155,11 +174,6 @@
 
     });
 
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 100
-        }, 1000);
-    }
 
 </script>
 

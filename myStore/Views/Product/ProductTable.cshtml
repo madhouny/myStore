@@ -22,10 +22,13 @@
                 <div class="form-group">
                     <label>Action</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <button class=" btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4">
                             <button class=" btn btn-primary form-control" type="button" id="newBtn">New</button>
                         </div>
                     </div>
@@ -101,7 +104,7 @@
     $(".pageButtons").click(function () {
 
         $.ajax({
-            url: '/Product/ProductTable',
+            url:  '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
             data: {
                 pageNo: $(this).attr("data-pageNo")
             }
@@ -118,7 +121,24 @@
         var searchValue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Product/ProductTable',
+            url:  '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContiner").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
+    $("#resetBtn").click(function () {
+        var searchValue = '';
+
+        $.ajax({
+            url:  '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
             data: {
                 search: searchValue
             }
@@ -135,10 +155,11 @@
     $("#newBtn").click(function () {
 
         $.ajax({
-            url: '/Product/Create',
+            url:  '@Url.Action("Create", "Product")',//'/Product/Create',
         })
             .done(function (response) {
                 $(".actionContainer").html(response);
+                focusAction(".actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -150,14 +171,14 @@
 
         $.ajax({
 
-            url: '/Product/Edit',
+            url:  '@Url.Action("Edit", "Product")',//'/Product/Edit',
             data: {
                 Id: $(this).attr('data-id')
             }
         })
             .done(function (response) {
                 $(".actionContainer").html(response);
-                focusAction();
+                focusAction(".actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -177,7 +198,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '/Product/Delete',
+                        url:  '@Url.Action("Delete", "Product")',//'/Product/Delete',
                         data: {
                             Id: $(this).attr('data-id')
                         }
@@ -208,12 +229,6 @@
         alert('Product added to cart');
     });
 
-
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 100
-        }, 1000);
-    }
 
 </script>
 

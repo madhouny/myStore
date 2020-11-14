@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
         <div class="col-md-4">
             <div class="thumb">
@@ -49,6 +49,7 @@
         </div>
     </div>
     <button id="updateBtn" type="button" class="btn btn-primary">Update</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
 </form>
 
 <script>
@@ -63,7 +64,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Shared/UploadImage',
+            url: '@Url.Action("UploadImage", "Shared")',//'/Shared/UploadImage',
             dataType: 'json',
             data: formData,
             contentType: false,
@@ -85,16 +86,24 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Category/Edit',
+            url: '@Url.Action("Edit", "Category")',//'/Category/Edit',
             data: $("#editCategory").serialize()
         })
             .done(function (response) {
                 $("#tableContiner").html(response);
                 $(".actionContainer").html("");
+                focusAction("#tableContiner");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
+
+    });
+
+       $("#cancelBtn").click(function () {
+
+           $(".actionContainer").html("");
+           focusAction("#tableContiner");
 
     });
 

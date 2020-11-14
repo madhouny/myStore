@@ -28,3 +28,12 @@
     </div>
 </section>
 
+<script>
+
+    function focusAction(focus) {
+        $('html, body').animate({
+            scrollTop: $(focus).offset().top - 100
+        }, 1000);
+    }
+
+</script>

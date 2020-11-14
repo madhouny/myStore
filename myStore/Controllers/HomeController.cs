@@ -11,7 +11,7 @@ namespace myStore.Controllers
     public class HomeController : Controller
     {
         //Injection de Service Categories , pour separer Controller et Database
-        CategoriesService categoryService = new CategoriesService();
+       // CategoriesService categoryService = new CategoriesService();
 
         public ActionResult Index()
         {
@@ -19,7 +19,7 @@ namespace myStore.Controllers
             HomeViewModel model = new HomeViewModel();
 
             // Ajouter la liste des categories dans le ViewModel
-            model.FeaturedCategories = categoryService.GetFeaturedCategories();
+            model.FeaturedCategories = CategoriesService.Instance.GetFeaturedCategories();
 
             return View(model);
         }

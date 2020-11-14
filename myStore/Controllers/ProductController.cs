@@ -14,7 +14,7 @@ namespace myStore.Controllers
 
         //Injection de Service Categories, Products , pour separer Controller et Database
         //ProductsService productService = new ProductsService();
-        CategoriesService categoryService = new CategoriesService();
+        //CategoriesService categoryService = new CategoriesService();
 
         public ActionResult Index()
         {
@@ -50,7 +50,7 @@ namespace myStore.Controllers
             //return PartialView(categories);
 
             NewProductViewModel model = new NewProductViewModel();
-            model.AvailableCategories = categoryService.GetCategories();
+            model.AvailableCategories = CategoriesService.Instance.GetCategories();
 
             return PartialView(model);
 
@@ -66,7 +66,7 @@ namespace myStore.Controllers
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
             //newProduct.CategoryID = model.CategoryID;
-            newProduct.category = categoryService.GetCategories(model.CategoryID);
+            newProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
 
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
@@ -85,7 +85,7 @@ namespace myStore.Controllers
             model.Description = product.Description;
             model.Price = product.Price;
             model.CategoryID = product.category != null ? product.category.ID : 0;
-            model.AvailableCategories = categoryService.GetCategories();
+            model.AvailableCategories = CategoriesService.Instance.GetCategories();
 
             return PartialView(model);
  
@@ -101,7 +101,7 @@ namespace myStore.Controllers
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
-            existingProduct.category = categoryService.GetCategories(model.CategoryID);
+            existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
 
             ProductsService.Instance.UpdateProduct(existingProduct);
 

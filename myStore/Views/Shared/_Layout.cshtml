@@ -1,7 +1,5 @@
 ﻿@using myStore.myStoreServices;
-@{ 
-    ConfigurationsService configurationService = new ConfigurationsService();
-}
+
 <!DOCTYPE html>
 
 <html>
@@ -185,8 +183,8 @@
                             </form>
                             <ul class="flat-social">
                
-                                <li><a href="@configurationService.GetConfig("LinkedinURL").Value"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="@configurationService.GetConfig("GithubURL").Value"><i class="fa fa-github"></i></a></li>
+                                <li><a href="@ConfigurationsService.Instance.GetConfig("LinkedinURL").Value"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="@ConfigurationsService.Instance.GetConfig("GithubURL").Value"><i class="fa fa-github"></i></a></li>
                             </ul><!-- /.flat-social -->
                         </div><!-- /.subscribe -->
                     </div>

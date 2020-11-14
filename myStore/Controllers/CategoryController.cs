@@ -13,7 +13,7 @@ namespace myStore.Controllers
     public class CategoryController : Controller
     {
         //Injection de Service Categories , pour separer Controller et Database
-        CategoriesService categoryService = new CategoriesService();
+        //CategoriesService categoryService = new CategoriesService();
 
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace myStore.Controllers
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
 
-            model.Categories = categoryService.GetCategories();
+            model.Categories = CategoriesService.Instance.GetCategories();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -58,7 +58,7 @@ namespace myStore.Controllers
             newCategory.ImageURL = model.ImageURL;
             newCategory.isFeatured = model.isFeatured;
 
-            categoryService.SaveCategory(newCategory);
+            CategoriesService.Instance.SaveCategory(newCategory);
 
             return RedirectToAction("CategoryTable");
         }
@@ -69,7 +69,7 @@ namespace myStore.Controllers
         public ActionResult Edit(int Id)
         {
             EditCategoryViewModel model = new EditCategoryViewModel();
-            var category = categoryService.GetCategories(Id);
+            var category = CategoriesService.Instance.GetCategories(Id);
 
             model.ID = category.ID;
             model.Name = category.Name;
@@ -84,13 +84,13 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {
-            var existingCategory = categoryService.GetCategories(model.ID);
+            var existingCategory = CategoriesService.Instance.GetCategories(model.ID);
             existingCategory.Name = model.Name;
             existingCategory.Description = model.Description;
             existingCategory.ImageURL = model.ImageURL;
             existingCategory.isFeatured = model.isFeatured;
 
-            categoryService.UpdateCategory(existingCategory);
+            CategoriesService.Instance.UpdateCategory(existingCategory);
             return RedirectToAction("CategoryTable");
         }
         #endregion
@@ -98,7 +98,7 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Delete(int  Id)
         {
-            categoryService.DeleteCategory(Id);
+            CategoriesService.Instance.DeleteCategory(Id);
             return RedirectToAction("CategoryTable");
         }
     }
