@@ -67,6 +67,7 @@ namespace myStore.Controllers
             newProduct.Price = model.Price;
             //newProduct.CategoryID = model.CategoryID;
             newProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
+            newProduct.ImageURL = model.ImageURL;
 
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
@@ -86,6 +87,7 @@ namespace myStore.Controllers
             model.Price = product.Price;
             model.CategoryID = product.category != null ? product.category.ID : 0;
             model.AvailableCategories = CategoriesService.Instance.GetCategories();
+            model.ImageURL = product.ImageURL;
 
             return PartialView(model);
  
@@ -102,6 +104,7 @@ namespace myStore.Controllers
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
+            existingProduct.ImageURL = model.ImageURL;
 
             ProductsService.Instance.UpdateProduct(existingProduct);
 

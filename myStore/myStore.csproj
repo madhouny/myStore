@@ -144,6 +144,10 @@
     <Compile Include="Migrations\202011131113088_configurationTable.designer.cs">
       <DependentUpon>202011131113088_configurationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011141343177_ImageURLforProduct.cs" />
+    <Compile Include="Migrations\202011141343177_ImageURLforProduct.designer.cs">
+      <DependentUpon>202011141343177_ImageURLforProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Config.cs" />
@@ -506,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011131113088_configurationTable.resx">
       <DependentUpon>202011131113088_configurationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011141343177_ImageURLforProduct.resx">
+      <DependentUpon>202011141343177_ImageURLforProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
