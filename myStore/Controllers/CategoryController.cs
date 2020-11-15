@@ -23,20 +23,32 @@ namespace myStore.Controllers
             //return View(categories);
             return View();
         }
-        public ActionResult CategoryTable(string search)
+        public ActionResult CategoryTable(string search, int? pageNo)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
 
-            model.Categories = CategoriesService.Instance.GetCategories();
+            //model.Categories = CategoriesService.Instance.GetCategories();
 
-            if (!string.IsNullOrEmpty(search))
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            var totalRecords = CategoriesService.Instance.GetCategoriesCount(search);
+            model.Categories = CategoriesService.Instance.GetCategories(search, pageNo.Value);
+
+            //if (!string.IsNullOrEmpty(search))
+            //{
+            //    model.SearchTerm = search;
+            //    model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            //    //categories = categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            //}
+
+            if(model.Categories != null)
             {
-                model.SearchTerm = search;
-                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-                //categories = categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.Pager = new Pager(totalRecords, pageNo, 3);
+                return PartialView("CategoryTable", model);
             }
-
-            return PartialView("CategoryTable", model);
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         #region Create

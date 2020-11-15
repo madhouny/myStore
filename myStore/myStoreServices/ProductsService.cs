@@ -49,9 +49,9 @@ namespace myStore.myStoreServices
                 
             using (var context = new StoreContext())
             {
-               
-                //return context.Products.OrderBy(x=>x.ID).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(c=>c.category).ToList();
-                return context.Products.Include(x => x.category).ToList();
+
+                return context.Products.OrderBy(x => x.ID).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(x => x.category).ToList();
+                //return context.Products.Include(x => x.category).ToList();
 
             }
         }
