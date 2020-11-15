@@ -63,16 +63,24 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Create(CategoryViewModel model)
         {
+            if (ModelState.IsValid)
+            {
 
-            var newCategory = new Category();
-            newCategory.Name = model.Name;
-            newCategory.Description = model.Description;
-            newCategory.ImageURL = model.ImageURL;
-            newCategory.isFeatured = model.isFeatured;
 
-            CategoriesService.Instance.SaveCategory(newCategory);
+                var newCategory = new Category();
+                newCategory.Name = model.Name;
+                newCategory.Description = model.Description;
+                newCategory.ImageURL = model.ImageURL;
+                newCategory.isFeatured = model.isFeatured;
 
-            return RedirectToAction("CategoryTable");
+                CategoriesService.Instance.SaveCategory(newCategory);
+
+                return RedirectToAction("CategoryTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
         }
         #endregion
 
@@ -96,14 +104,21 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {
-            var existingCategory = CategoriesService.Instance.GetCategories(model.ID);
-            existingCategory.Name = model.Name;
-            existingCategory.Description = model.Description;
-            existingCategory.ImageURL = model.ImageURL;
-            existingCategory.isFeatured = model.isFeatured;
+            if (ModelState.IsValid)
+            {
+                var existingCategory = CategoriesService.Instance.GetCategories(model.ID);
+                existingCategory.Name = model.Name;
+                existingCategory.Description = model.Description;
+                existingCategory.ImageURL = model.ImageURL;
+                existingCategory.isFeatured = model.isFeatured;
 
-            CategoriesService.Instance.UpdateCategory(existingCategory);
-            return RedirectToAction("CategoryTable");
+                CategoriesService.Instance.UpdateCategory(existingCategory);
+                return RedirectToAction("CategoryTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
         }
         #endregion
 

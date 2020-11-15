@@ -82,22 +82,61 @@
             });
     });
 
+    $('#editCategory').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+            },
+            Description: {
+                minlength: 5,
+                maxlength: 200
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum Length is 5',
+                maxlength: 'Maximum Length is 50'
+            },
+            Description: {
+                minlength: 'Minimum Length is 5',
+                maxlength: 'Maximum Length is 200'
+            }
+        }
+    });
+
     $("#updateBtn").click(function () {
-
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Edit", "Category")',//'/Category/Edit',
-            data: $("#editCategory").serialize()
-        })
-            .done(function (response) {
-                $("#tableContiner").html(response);
-                $(".actionContainer").html("");
-                focusAction("#tableContiner");
+        if ($("#editCategory").valid()) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Edit", "Category")',//'/Category/Edit',
+                data: $("#editCategory").serialize()
             })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("fail");
+                .done(function (response) {
+                    $("#tableContiner").html(response);
+                    $(".actionContainer").html("");
+                    focusAction("#tableContiner");
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal({
+                        title: "Warning",
+                        text: "Please enter All required Fields",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    });
+                });
+        } else {
+            swal({
+                title: " Js Warning",
+                text: "Please enter All required Fields",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
             });
-
+        }
     });
 
        $("#cancelBtn").click(function () {

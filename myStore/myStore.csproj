@@ -148,6 +148,14 @@
     <Compile Include="Migrations\202011141343177_ImageURLforProduct.designer.cs">
       <DependentUpon>202011141343177_ImageURLforProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011151231177_addDataValidations.cs" />
+    <Compile Include="Migrations\202011151231177_addDataValidations.designer.cs">
+      <DependentUpon>202011151231177_addDataValidations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011151359044_addRequiredPriceValidation.cs" />
+    <Compile Include="Migrations\202011151359044_addRequiredPriceValidation.designer.cs">
+      <DependentUpon>202011151359044_addRequiredPriceValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Config.cs" />
@@ -514,6 +522,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011141343177_ImageURLforProduct.resx">
       <DependentUpon>202011141343177_ImageURLforProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011151231177_addDataValidations.resx">
+      <DependentUpon>202011151231177_addDataValidations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011151359044_addRequiredPriceValidation.resx">
+      <DependentUpon>202011151359044_addRequiredPriceValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -59,18 +59,23 @@ namespace myStore.Controllers
         [HttpPost]
         public ActionResult Create(NewProductViewModel model)
         {
-            
+            if (ModelState.IsValid)
+            {
+                var newProduct = new Product();
+                newProduct.Name = model.Name;
+                newProduct.Description = model.Description;
+                newProduct.Price = model.Price;
+                //newProduct.CategoryID = model.CategoryID;
+                newProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
+                newProduct.ImageURL = model.ImageURL;
 
-            var newProduct = new Product();
-            newProduct.Name = model.Name;
-            newProduct.Description = model.Description;
-            newProduct.Price = model.Price;
-            //newProduct.CategoryID = model.CategoryID;
-            newProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
-            newProduct.ImageURL = model.ImageURL;
-
-            ProductsService.Instance.SaveProduct(newProduct);
-            return RedirectToAction("ProductTable");
+                ProductsService.Instance.SaveProduct(newProduct);
+                return RedirectToAction("ProductTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
         }
 
         [HttpGet]
@@ -99,16 +104,24 @@ namespace myStore.Controllers
             //productService.UpdateProduct(product);
             //return RedirectToAction("ProductTable");
 
-            var existingProduct = ProductsService.Instance.GetProduct(model.ID);
-            existingProduct.Name = model.Name;
-            existingProduct.Description = model.Description;
-            existingProduct.Price = model.Price;
-            existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
-            existingProduct.ImageURL = model.ImageURL;
+            if (ModelState.IsValid)
+            {
+                var existingProduct = ProductsService.Instance.GetProduct(model.ID);
+                existingProduct.Name = model.Name;
+                existingProduct.Description = model.Description;
+                existingProduct.Price = model.Price;
+                existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
+                existingProduct.ImageURL = model.ImageURL;
 
-            ProductsService.Instance.UpdateProduct(existingProduct);
+                ProductsService.Instance.UpdateProduct(existingProduct);
 
-            return RedirectToAction("ProductTable");
+                return RedirectToAction("ProductTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
+
         }
 
      
