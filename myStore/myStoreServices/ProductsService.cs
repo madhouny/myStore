@@ -56,6 +56,31 @@ namespace myStore.myStoreServices
             }
         }
 
+        // Products forWidget 
+        public List<Product> GetProducts(int pageNo, int pageSize)
+        {
+          
+            using (var context = new StoreContext())
+            {
+
+                return context.Products.OrderByDescending(x => x.ID).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(x => x.category).ToList();
+                //return context.Products.Include(x => x.category).ToList();
+
+            }
+        }
+
+        public List<Product> GetLatestProducts(int numberOfProducts)
+        {
+
+            using (var context = new StoreContext())
+            {
+
+                return context.Products.OrderByDescending(x => x.ID).Take(numberOfProducts).Include(x => x.category).ToList();
+                
+
+            }
+        }
+
         public void SaveProduct(Product product)
         {
             using(var context = new StoreContext())
