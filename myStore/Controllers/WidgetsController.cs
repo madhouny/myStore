@@ -11,7 +11,7 @@ namespace myStore.Controllers
     public class WidgetsController : Controller
     {
         
-        public ActionResult Products(bool isLatestProducts)
+        public ActionResult Products(bool isLatestProducts,int? CategoryID = 0)
         {
             //Injecter le Service ProductsWidgetViewModel
             ProductsWidgetViewModel model = new ProductsWidgetViewModel();
@@ -20,6 +20,10 @@ namespace myStore.Controllers
             if (isLatestProducts)
             {
                 model.Products = ProductsService.Instance.GetLatestProducts(4);
+            }
+            else if(CategoryID.HasValue && CategoryID.Value > 0)
+            {
+                model.Products = model.Products = ProductsService.Instance.GetProductsByCategory(CategoryID.Value,4);
             }
             else
             {

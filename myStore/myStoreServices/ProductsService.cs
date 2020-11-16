@@ -81,6 +81,16 @@ namespace myStore.myStoreServices
             }
         }
 
+        public List<Product> GetProductsByCategory(int categoryID, int pageSize)
+        {
+            using (var context = new StoreContext())
+            {
+
+                return context.Products.Where(x=>x.category.ID == categoryID).OrderByDescending(x => x.ID).Take(pageSize).Include(x => x.category).ToList();
+                
+            }
+        }
+
         public void SaveProduct(Product product)
         {
             using(var context = new StoreContext())

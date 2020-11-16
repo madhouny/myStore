@@ -55,4 +55,9 @@ namespace myStore.ViewModels
         public List<Category> AvailableCategories { get; set; }
     }
 
+    public class DetailProductViewModel
+    {
+      public Product product { get; set; }
+    }
+
 }

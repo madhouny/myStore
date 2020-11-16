@@ -29,7 +29,7 @@
 
                 <li class="product-item @product.category.Name.ToLower()">
                     <div class="product-thumb clearfix">
-                        <a href="#" class="product-thumb">
+                        <a href="@Url.Action("Details","Product", new { Id = product.ID})" class="product-thumb">
                             <img src="@imageURL" alt="image" style="height:250px;">
                         </a>
                         @if (Model.IsLatestProducts)

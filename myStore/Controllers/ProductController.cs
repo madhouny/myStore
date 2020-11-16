@@ -124,7 +124,18 @@ namespace myStore.Controllers
 
         }
 
-     
+        [HttpGet]
+        public ActionResult Details(int Id)
+        {
+ 
+            DetailProductViewModel model = new DetailProductViewModel();
+            model.product = ProductsService.Instance.GetProduct(Id);
+           
+            return View(model);
+
+        }
+
+
         [HttpPost]
         public ActionResult Delete(int Id)
         {
