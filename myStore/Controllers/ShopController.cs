@@ -1,4 +1,5 @@
-﻿using myStore.myStoreServices;
+﻿using myStore.CODE;
+using myStore.myStoreServices;
 using myStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,19 @@ namespace myStore.Controllers
 {
     public class ShopController : Controller
     {
-        //ProductsService productService = new ProductsService();
+        
+        public ActionResult Index(string searchTerm, int? minPrice, int? maxPrice, int? categoryID, int?sortBy)
+        {
+            ShopViewModel model = new ShopViewModel();
+            model.FeaturedCategories = CategoriesService.Instance.GetFeaturedCategories();
+            model.MaxPrice = ProductsService.Instance.GetMaxPrice();
+
+            model.Products = ProductsService.Instance.SearchProducts(searchTerm, minPrice, maxPrice, categoryID, sortBy);
+
+            model.SortBy = sortBy;
+          
+            return View(model);
+        }
         public ActionResult Checkout()
         {
             ChekoutViewModel model = new ChekoutViewModel();
