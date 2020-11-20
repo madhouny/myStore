@@ -21,4 +21,12 @@ namespace myStore.ViewModels
         public int? SortBy { get; set; }
 
     }
+
+    public class FilterProductsShopViewModel
+    {
+       
+        public List<Product> Products { get; set; }
+     
+
+    }
 }

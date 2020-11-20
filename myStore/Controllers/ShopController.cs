@@ -43,5 +43,13 @@ namespace myStore.Controllers
             }
             return View(model);
         }
+        public ActionResult FilterProducts(string searchTerm, int? minPrice, int? maxPrice, int? categoryID, int? sortBy)
+        {
+            FilterProductsShopViewModel model = new FilterProductsShopViewModel();
+            
+            model.Products = ProductsService.Instance.SearchProducts(searchTerm, minPrice, maxPrice, categoryID, sortBy);
+
+            return PartialView(model);
+        }
     }
 }
