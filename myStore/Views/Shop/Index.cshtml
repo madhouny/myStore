@@ -40,14 +40,28 @@
                             Sort By
                         </h5>
                         <ul>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Default })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default</a></li>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Popularity })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Default, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Popularity, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</a></li>
 
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceHighToLow })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceHighToLow, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
                         </ul>
                     </div><!-- /.widget-sort-by -->
 
+                    
+                    <div class="widget widget_tag">
+                        <h5 class="widget-title">
+                            Featured Categories
+                        </h5>
+                        <div class="tag-list">
+                            @foreach (var category in Model.FeaturedCategories)
+                            {
+                                <a href="@Url.Action("Index", "Shop", new { categoryID = category.ID, sortBy = Model.SortBy })" class="@(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>
+                            }
+
+
+                        </div>
+                    </div>
                     <div class="widget widget-price">
                         <h5 class="widget-title">Filter by price</h5>
                         <div class="price-filter">
@@ -56,20 +70,8 @@
                                 Price: <input type="text" id="amount" disabled="">
                             </p>
                         </div>
-                    </div>
-                    <div class="widget widget_tag">
-                        <h5 class="widget-title">
-                            Featured Categories
-                        </h5>
-                        <div class="tag-list">
-                            @foreach (var category in Model.FeaturedCategories)
-                            {
-                                <a href="@Url.Action("Index", "Shop", new { categoryID = category.ID })">@category.Name</a>
-                            }
-
-
-                        </div>
                     </div><!-- /.widget -->
+                    <a href="@Url.Action("Index", "Shop")" class="btn btn-danger">Reset Filters</a>
                 </div><!-- /.sidebar -->
             </div><!-- /.col-md-3 -->
         
@@ -78,16 +80,12 @@
                     @{
                         var filterProductsShopViewModel = new FilterProductsShopViewModel();
                         filterProductsShopViewModel.Products = Model.Products;
-
+                        filterProductsShopViewModel.Pager = Model.Pager;
 
                         Html.RenderPartial("FilterProducts", filterProductsShopViewModel);
                     }
                 </div>
-                <div class="filter-shop clearfix">
-                    <p class="showing-product float-right">
-                        Showing 1–12 of 56 Products
-                    </p>
-                </div><!-- /.filte-shop -->
+         
 
             </div><!-- /.col-md-9 -->
         </div><!-- /.row -->
@@ -116,9 +114,6 @@
 
             clearTimeout(callTimeOut);
             callTimeOut = setTimeout(getData, 2000);
-            
-            
-
         }
     });
 
@@ -126,6 +121,8 @@
          $.ajax({
             url:  '@Url.Action("FilterProducts", "Shop")',
              data: {
+                 sortBy: '@Model.SortBy',
+                 categoryID: '@Model.CategoryID',
                  minPrice: priceSlider.slider("values", 0),
                  maxPrice: priceSlider.slider("values", 1),
             }
