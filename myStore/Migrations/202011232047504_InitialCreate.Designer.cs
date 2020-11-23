@@ -7,13 +7,13 @@ namespace myStore.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class UserModel : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202011220923582_UserModel"; }
+            get { return "202011232047504_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
