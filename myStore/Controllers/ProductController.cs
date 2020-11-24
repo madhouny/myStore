@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace myStore.Controllers
 {
+    //[Authorize(Roles ="Admin")]
     public class ProductController : Controller
     {
 
@@ -25,18 +26,24 @@ namespace myStore.Controllers
         {
             //var products = productService.GetProducts();
 
+            var pageSize = ConfigurationsService.Instance.PageSize();
+
             ProductSearchViewModel model = new ProductSearchViewModel();
+            model.SearchTerm = search;
 
-            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
 
-            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
+            var totalRecords = ProductsService.Instance.GetProductsCount(search);
+            model.Products = ProductsService.Instance.GetProducts(search, pageNo.Value, pageSize);
+
+            model.Pager = new Pager(totalRecords, pageNo, pageSize);
             
-            if(string.IsNullOrEmpty(search) == false)
-            {
-                //products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-                model.SearchTerm = search;
-                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
+            //if (string.IsNullOrEmpty(search) == false)
+            //{
+            //    //products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            //    model.SearchTerm = search;
+            //    model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            //}
            
             return PartialView(model);
         }

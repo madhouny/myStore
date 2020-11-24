@@ -64,9 +64,14 @@
                                 <button type="submit" class="header-search-submit" title="Search">Search</button>
                             </form>
                         </li>
-                        <li class="box-login">
-                            <a class="icon_login" href="#"></a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="box-login">
+                                <a class="icon_login" href="#"></a>
+                                @User.Identity.Name
+                            </li>
+                        }
+
                         <li class="box-cart nav-top-cart-wrapper">
                             <a class="icon_cart nav-cart-trigger active" href="#"><span></span></a>
                             <div class="nav-shop-cart">
@@ -84,7 +89,7 @@
                     </ul><!-- /.menu-extra -->
                     <div class="nav-wrap">
                         <nav id="mainnav" class="mainnav">
-                            <ul class="menu">
+                            <ul class="menu ">
                                 <li>
                                     <a href="@Url.Action("Index","Home")">HOME</a>
                                 </li>

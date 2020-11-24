@@ -117,7 +117,12 @@ namespace myStore.myStoreServices
         {
             using (var context = new StoreContext())
             {
-                var category = context.Categories.Find(Id);
+                //var category = context.Categories.Find(Id);
+                var category = context.Categories.Where(x => x.ID == Id).Include(x => x.Products).FirstOrDefault();
+
+                //Delete first product before deleting Category
+                context.Products.RemoveRange(category.Products);
+
                 context.Categories.Remove(category);
                 context.SaveChanges();
             }

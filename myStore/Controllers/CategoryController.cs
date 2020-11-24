@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace myStore.Controllers
 {
-  
+    //[Authorize(Roles ="Admin")]
     public class CategoryController : Controller
     {
         //Injection de Service Categories , pour separer Controller et Database
