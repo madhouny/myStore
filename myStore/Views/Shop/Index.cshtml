@@ -127,7 +127,7 @@
 
     function getData(dUrl) {
         
-
+        showLoader();
         $.ajax({
             url: dUrl,
             data: {
@@ -142,8 +142,10 @@
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
-            })
-            
+            }).always(function () {
+                console.log("always");
+                hideLoader();
+            });     
     }
 
     function PriceRangeChange() {

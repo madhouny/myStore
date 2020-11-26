@@ -1,4 +1,6 @@
-﻿using myStore.CODE;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using myStore.CODE;
 using myStore.myStoreServices;
 using myStore.ViewModels;
 using System;
@@ -12,7 +14,32 @@ namespace myStore.Controllers
    
     public class ShopController : Controller
     {
-        
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Index(string searchTerm, int? minPrice, int? maxPrice, int? categoryID, int? sortBy, int? pageNo)
         {
             var pageSize = ConfigurationsService.Instance.ShopPageSize();
@@ -35,6 +62,7 @@ namespace myStore.Controllers
           
             return View(model);
         }
+        [Authorize]
         public ActionResult Checkout()
         {
             ChekoutViewModel model = new ChekoutViewModel();
@@ -51,6 +79,7 @@ namespace myStore.Controllers
 
                 model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
 
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
             return View(model);
         }
