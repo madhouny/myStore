@@ -156,6 +156,7 @@ namespace myStore.myStoreServices
         {
             using (var context = new StoreContext())
             {
+                
                 context.Entry(product).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }

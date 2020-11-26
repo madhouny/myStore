@@ -24,6 +24,8 @@ namespace myStore.ViewModels
 
         public Pager Pager { get; set; }
 
+        public string SearchTerm { get; set; }
+
     }
 
     public class FilterProductsShopViewModel
@@ -31,6 +33,12 @@ namespace myStore.ViewModels
        
         public List<Product> Products { get; set; }
         public Pager Pager { get; set; }
+
+        public int? SortBy { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string SearchTerm { get; set; }
 
 
     }

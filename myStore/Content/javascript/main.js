@@ -377,6 +377,8 @@
       });
     };
 
+   
+
     //var flatPrice = function() {
     //    if( $().slider ) {
     //        $( function() {

@@ -117,7 +117,9 @@ namespace myStore.Controllers
                 existingProduct.Name = model.Name;
                 existingProduct.Description = model.Description;
                 existingProduct.Price = model.Price;
-                existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
+                existingProduct.category = null;
+                existingProduct.CategoryID = model.CategoryID;
+                //existingProduct.category = CategoriesService.Instance.GetCategories(model.CategoryID);
                 existingProduct.ImageURL = model.ImageURL;
 
                 ProductsService.Instance.UpdateProduct(existingProduct);

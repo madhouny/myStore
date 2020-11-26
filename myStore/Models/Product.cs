@@ -20,7 +20,7 @@ namespace myStore.Models
         [Required]
         [Range(1,100000)]
         public decimal Price { get; set; }
-        //public int CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public virtual Category category { get; set; }
         public string ImageURL { get; set; }
 

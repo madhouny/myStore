@@ -193,6 +193,10 @@
     <Compile Include="Migrations\202011232047504_InitialCreate.designer.cs">
       <DependentUpon>202011232047504_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011251949068_addedCategoryIDinModel.cs" />
+    <Compile Include="Migrations\202011251949068_addedCategoryIDinModel.designer.cs">
+      <DependentUpon>202011251949068_addedCategoryIDinModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -598,6 +602,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011232047504_InitialCreate.resx">
       <DependentUpon>202011232047504_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011251949068_addedCategoryIDinModel.resx">
+      <DependentUpon>202011251949068_addedCategoryIDinModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

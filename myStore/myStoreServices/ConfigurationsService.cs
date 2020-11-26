@@ -39,5 +39,15 @@ namespace myStore.myStoreServices
                 return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 5;
             }
         }
+
+        public int ShopPageSize()
+        {
+            using (var context = new StoreContext())
+            {
+                var pageSizeConfig = context.Configurations.Find("PageSize");
+
+                return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 6;
+            }
+        }
     }
 }

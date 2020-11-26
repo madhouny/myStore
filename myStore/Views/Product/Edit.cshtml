@@ -97,6 +97,9 @@
             Description: {
                 minlength: 5,
                 maxlength: 200
+            },
+            Price: {
+                range: [1, 100000]
             }
         },
         messages: {
@@ -110,8 +113,7 @@
                 maxlength: 'Maximum Length is 200'
             },
             Price: {
-                required: 'Price is required',
-                number: true,
+                range: 'Price must be within on 1 - 100000'
             }
         }
     });

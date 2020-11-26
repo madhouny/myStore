@@ -30,7 +30,7 @@
                     <div class="widget widget-search">
                         <form role="search" method="get" class="search-form" action="@Url.Action("Index", "Shop")">
                             <label>
-                                <input type="search" class="search-field" placeholder="Search …" value="" name="searchTerm">
+                                <input type="search" class="search-field" placeholder="Search …" value="@Model.SearchTerm" name="searchTerm">
                             </label>
                             <input type="submit" class="search-submit" value="Search">
                         </form>
@@ -40,15 +40,15 @@
                             Sort By
                         </h5>
                         <ul>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Default, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default</a></li>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.Popularity, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</a></li>
+                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Default, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default</a></li>
+                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Popularity, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</a></li>
 
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
-                            <li><a href="@Url.Action("Index", "Shop", new { sortBy = (int)SortByEnums.PriceHighToLow, categoryID = Model.CategoryID })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
+                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
+                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.PriceHighToLow, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
                         </ul>
                     </div><!-- /.widget-sort-by -->
 
-                    
+
                     <div class="widget widget_tag">
                         <h5 class="widget-title">
                             Featured Categories
@@ -56,7 +56,7 @@
                         <div class="tag-list">
                             @foreach (var category in Model.FeaturedCategories)
                             {
-                                <a href="@Url.Action("Index", "Shop", new { categoryID = category.ID, sortBy = Model.SortBy })" class="@(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>
+                                <a data-href="@Url.Action("FilterProducts", "Shop", new { categoryID = category.ID, sortBy = Model.SortBy })" class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>
                             }
 
 
@@ -74,18 +74,20 @@
                     <a href="@Url.Action("Index", "Shop")" class="btn btn-danger">Reset Filters</a>
                 </div><!-- /.sidebar -->
             </div><!-- /.col-md-3 -->
-        
+
             <div class="col-md-9">
                 <div id="productDiv">
                     @{
                         var filterProductsShopViewModel = new FilterProductsShopViewModel();
                         filterProductsShopViewModel.Products = Model.Products;
                         filterProductsShopViewModel.Pager = Model.Pager;
+                        filterProductsShopViewModel.CategoryID = Model.CategoryID;
+                        filterProductsShopViewModel.SortBy = Model.SortBy;
 
                         Html.RenderPartial("FilterProducts", filterProductsShopViewModel);
                     }
                 </div>
-         
+
 
             </div><!-- /.col-md-9 -->
         </div><!-- /.row -->
@@ -108,21 +110,50 @@
             var minPrice = ui.values[0];
             var maxPrice = ui.values[1];
 
-
             $("#amount").val("$" + minPrice + ".00" + " - " + "$" + maxPrice + ".00");
-
-
             clearTimeout(callTimeOut);
-            callTimeOut = setTimeout(getData, 2000);
+            callTimeOut = setTimeout(PriceRangeChange, 1000);
         }
     });
 
-    function getData() {
+    $(".dataLink").click(function () {
+        var url = $(this).attr("data-href");
+
+        if (url != "" || url != undefined) {
+            getData(url);
+        }
+    });
+
+
+    function getData(dUrl) {
+        
+
+        $.ajax({
+            url: dUrl,
+            data: {
+
+                minPrice: priceSlider.slider("values", 0),
+                maxPrice: priceSlider.slider("values", 1),
+            }
+        })
+            .done(function (response) {
+
+                $("#productDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            })
+            
+    }
+
+    function PriceRangeChange() {
+       
          $.ajax({
             url:  '@Url.Action("FilterProducts", "Shop")',
              data: {
-                 sortBy: '@Model.SortBy',
-                 categoryID: '@Model.CategoryID',
+                 searchTerm: $("SearchTerm").val(),
+                sortBy: $("SortBy").val(),
+                categoryID: $("CategoryID").val(),
                  minPrice: priceSlider.slider("values", 0),
                  maxPrice: priceSlider.slider("values", 1),
             }
