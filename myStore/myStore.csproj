@@ -197,16 +197,27 @@
     <Compile Include="Migrations\202011251949068_addedCategoryIDinModel.designer.cs">
       <DependentUpon>202011251949068_addedCategoryIDinModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011291601182_AddedOrderAndOrderItemsTables.cs" />
+    <Compile Include="Migrations\202011291601182_AddedOrderAndOrderItemsTables.designer.cs">
+      <DependentUpon>202011291601182_AddedOrderAndOrderItemsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011291849153_AddedQuantityInOrderItem.cs" />
+    <Compile Include="Migrations\202011291849153_AddedQuantityInOrderItem.designer.cs">
+      <DependentUpon>202011291849153_AddedQuantityInOrderItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="myStoreServices\ConfigurationsService.cs" />
     <Compile Include="myStoreServices\ProductsService.cs" />
     <Compile Include="myStoreServices\CategoriesService.cs" />
+    <Compile Include="myStoreServices\ShopService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
@@ -605,6 +616,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011251949068_addedCategoryIDinModel.resx">
       <DependentUpon>202011251949068_addedCategoryIDinModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011291601182_AddedOrderAndOrderItemsTables.resx">
+      <DependentUpon>202011291601182_AddedOrderAndOrderItemsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011291849153_AddedQuantityInOrderItem.resx">
+      <DependentUpon>202011291849153_AddedQuantityInOrderItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

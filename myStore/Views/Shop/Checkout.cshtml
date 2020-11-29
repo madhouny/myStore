@@ -15,7 +15,7 @@
                         @foreach (var product in Model.CartProducts)
                         {
                             var productQuantity = Model.CartProductIDs.Where(productID => productID == product.ID).Count();
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed" data-id="@product.ID">
                                 <div>
                                     <h6 class="my-0">@i - @product.Name - Qty: @productQuantity</h6>
                                     <small class="text-muted">@(product.Description.Length > 100 ? product.Description.Substring(0, 99) : product.Description)</small>
@@ -60,6 +60,36 @@
             </div>
         </div><!-- /.container -->
     </section>
+
+    <script>
+    $("#placeOrderBtn").click(function () {
+
+        $.ajax({
+            url:  '@Url.Action("PlaceOrder", "Shop")',
+            data: {
+                productIDs: '@string.Join("-", Model.CartProductIDs)',
+
+            }
+        })
+            .done(function (response) {
+                if (response.Success)
+                {
+                    $.cookie('CartProducts', '', { path: '/' });
+                    updateCartProducts();
+                    swal("Done", "Your Order has been placed.", "success").then((value) => {
+        			window.location = '@Url.Action("Index", "Shop")';
+        		    });
+                } else
+                {
+                    swal("Failed", "Enable to place order", "warning");
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+    </script>
+
 }
 else
 {
@@ -67,4 +97,6 @@ else
     No Products in Cart
 </div>
 }
+
+
 

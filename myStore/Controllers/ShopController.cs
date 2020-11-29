@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myStore.CODE;
+using myStore.Models;
 using myStore.myStoreServices;
 using myStore.ViewModels;
 using System;
@@ -69,7 +70,7 @@ namespace myStore.Controllers
 
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
-            if(CartProductsCookie != null)
+            if(CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value))
             {
                 //var productIDs = CartProductsCookie.Value;
                 //var ids = productIDs.Split('-');
@@ -100,6 +101,39 @@ namespace myStore.Controllers
             model.Pager = new Pager(totalCount, pageNo, pageSize);
 
             return PartialView(model);
+        }
+
+        // return a JSON Result
+        public JsonResult PlaceOrder(string productIDs)
+        {
+
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if(!string.IsNullOrEmpty(productIDs))
+            {
+
+                var productQuantities = productIDs.Split('-').Select(x => int.Parse(x)).ToList();
+                var boughtProducts = ProductsService.Instance.GetProducts(productQuantities.Distinct().ToList());
+
+                Order newOrder = new Order();
+                newOrder.UserID = User.Identity.GetUserId();
+                newOrder.OrderAt = DateTime.Now;
+                newOrder.Status = "Pending";
+                newOrder.TotalAmount = boughtProducts.Sum(x => x.Price * productQuantities.Where(productID => productID == x.ID).Count());
+
+                newOrder.OrderItems = new List<OrderItem>();
+                newOrder.OrderItems.AddRange(boughtProducts.Select(x => new OrderItem() { ProductID = x.ID, Quantity = productQuantities.Where(productID => productID == x.ID).Count() }));
+
+                var rowEffected = ShopService.Instance.SaveOrder(newOrder);
+
+                result.Data = new { Success = true, Rows = rowEffected };
+            }
+            else
+            {
+                result.Data = new { Success = false };
+            }
+            return result;
         }
     }
 }
